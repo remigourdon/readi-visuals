@@ -1,7 +1,17 @@
 body {
-  padding-top: 50px;
+    padding-top: 50px;
 }
-.visual {
-  padding: 40px 15px;
-  text-align: center;
+
+#visual-container {
+    padding: 40px 15px;
+    text-align: center;
+}
+
+.countries {
+    fill: #d3d3d3;
+}
+
+.impacts {
+    fill: black;
+    opacity: 0.3;
 }
