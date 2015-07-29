@@ -33,19 +33,24 @@ d3.json("json/countries.topo.json", function(error, json) {
 /* Functions */
 
 function sizeChange() {
-	    d3.selectAll("#map, #plot").attr("transform", "scale(" + $("#visual-container").width()/900 + ")");
+	    d3.selectAll("#map, #plot").attr("transform", "scale(" + $("#visual-container").width()/900 + ") translate(-25 100)");
 	    $("svg").height($("#visual-container").width()*0.618);
 }
 
 function playAnimation() {
-    var nbSamples = 500,
+    // Disable play button and reset button
+    d3.select("#playButton").attr("disabled", "disabled");
+    d3.select("#resetButton").attr("disabled", "disabled");
+    
+    var nbSamples = 5000,
         duration = 15000;
     
     var url = "https://data.nasa.gov/resource/gh4g-9sfh?$$app_token=72oVQmkbQFVrtrviW6DT8oAvm&$limit=" + nbSamples + "&$where=reclat IS NOT NULL AND year IS NOT NULL and mass > 1&$order=year ASC";
     
     radiusScale = d3.scale.log().domain([1,100000000]).range([0,1]);
     
-    var nbImpacts = 0;
+    var nbImpacts = 0,
+        count = 0;
     
     d3.json(url, function (data) {
     
@@ -81,6 +86,45 @@ function playAnimation() {
             .duration(500)
             .delay(function (d,i) {
                 return i / nbImpacts * duration;
-            });
+            })
+            .each("end", function(d) {
+                count++;
+                year = parseInt(d.year.split("-")[0]);
+                updateTimeline(year, count, nbImpacts);
+                updateCounter(count);
+                // Enable reset button if last impact
+                if(count == nbImpacts) {
+                    d3.select("#resetButton").attr("disabled", null);
+                }
+            })
+            .transition()
+            .attr("r", "0.15em")
+            .duration(3000);
     });
+}
+
+function resetAnimation() {
+    // Remove previous plot
+    d3.select("#plot").remove();
+    
+    // Reset timeline and counter
+    updateTimeline(0, 0, 100);
+    updateCounter(0);
+    
+    // Enable play button
+    d3.select("#playButton").attr("disabled", null);
+}
+
+function updateTimeline(year, count, nbImpacts) {
+    var value = d3.round(count / nbImpacts * 100, 0);
+    d3.select("#timeline .progress-value")
+        .text("Year " + year);
+    d3.select("#timeline div")
+        .attr("aria-valuenow", String(value))
+        .style({"width": value+"%"});
+}
+
+function updateCounter(count) {
+    d3.select("#counter .label-danger").text(count + "  ")
+        .append("span").attr("class", "glyphicon glyphicon-pushpin");
 }

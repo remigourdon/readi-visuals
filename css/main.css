@@ -3,9 +3,12 @@ body {
 }
 
 #visual-container {
-    padding: 40px 15px;
+    padding: 2em 4em;
     text-align: center;
 }
+
+
+/* Meteorite Landings */
 
 .countries {
     fill: #d3d3d3;
@@ -14,4 +17,29 @@ body {
 .impacts {
     fill: black;
     opacity: 0.3;
+}
+
+#counter {
+    font-size: 2.5em;
+    text-align: center;
+}
+
+.progress {
+    background: rgba(245, 245, 245, 1); 
+    height: 2.5em;
+    text-align: center;
+}
+
+.progress-bar-custom {
+    background: #d0d0d0; 
+    opacity: 0.6;
+}
+
+.progress-value {
+    position:absolute;
+    right:0;
+    left:0;
+    font-size: 2em;
+    font-family: monospace;
+    color: #9f9b9b;
 }
