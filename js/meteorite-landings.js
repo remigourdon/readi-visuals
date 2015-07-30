@@ -19,7 +19,7 @@ var svg = d3.select("#visual-container")
 
 /* Draw map */
 
-d3.json("json/countries.topo.json", function(error, json) {
+d3.json("data/countries.topo.json", function(error, json) {
     if (error) return console.error(error);
     
     svg.selectAll(".countries")
