@@ -42,8 +42,8 @@ function playAnimation() {
     d3.select("#playButton").attr("disabled", "disabled");
     d3.select("#resetButton").attr("disabled", "disabled");
     
-    var nbSamples = 5000,
-        duration = 15000;
+    var nbSamples = 50000,
+        duration = 60000;
     
     var url = "https://data.nasa.gov/resource/gh4g-9sfh?$$app_token=72oVQmkbQFVrtrviW6DT8oAvm&$limit=" + nbSamples + "&$where=reclat IS NOT NULL AND year IS NOT NULL and mass > 1&$order=year ASC";
     
